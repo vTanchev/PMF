@@ -1,0 +1,7 @@
+<app-list-of-transactions
+  [transactions]="transactionsToRender"
+></app-list-of-transactions>
+<app-filter-transactions
+  [setTransactions]="transactions"
+  (filterEvent)="handleFilteredTransactions($event)"
+></app-filter-transactions>

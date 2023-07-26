@@ -1,0 +1,85 @@
+<div class="curr-acc">
+  <div class="info">
+    <div mat-card-avatar class="avatar-img"></div>
+    <div class="acc">
+      <p class="current-acc-p">Current account</p>
+      <div class="acc-id"><p>1234 56678 89056</p></div>
+    </div>
+  </div>
+
+  <div class="balance">
+    <p class="cur-acc-amount">12,340.000,00 <span>RSD</span></p>
+    <p class="cur-acc-balance">AVAILABLE BALANCE</p>
+  </div>
+</div>
+
+<!--  -->
+<div class="transactions-table">
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z1">
+    <!-- left container -->
+    <ng-container matColumnDef="name-and-date">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let transaction" class="td">
+        <div class="info-container">
+          <div class="avatar-informations">
+            <div mat-card-avatar class="avatar-img">
+              <mat-icon
+                [ngClass]="{
+                  'red-icon': transaction.direction === 'd',
+                  'green-icon': transaction.direction !== 'd'
+                }"
+              >
+                <ng-container
+                  *ngIf="transaction.direction === 'd'; else upwardIcon"
+                >
+                  arrow_downward
+                </ng-container>
+                <ng-template #upwardIcon> arrow_upward </ng-template>
+              </mat-icon>
+            </div>
+
+            <div class="details">
+              <p class="transaction-id">{{ transaction.id }}</p>
+              <p class="transaction-name">
+                {{ transaction["beneficiary-name"] }}
+              </p>
+              <p class="transaction-date">{{ transaction.date }}</p>
+            </div>
+          </div>
+
+          <div class="transaction-category">
+            <ng-container *ngIf="transaction.category; else addCategory">
+              <p>{{ transaction.category }}</p>
+            </ng-container>
+            <ng-template #addCategory>
+              <p>Add Category +</p>
+            </ng-template>
+          </div>
+        </div>
+      </td>
+    </ng-container>
+
+    <!-- right container -->
+    <ng-container matColumnDef="amount-details">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let transaction">
+        <div class="amount-currency-container">
+          <p class="transaction-amount">
+            {{ transaction.amount.replace("€", "") }}
+          </p>
+          <p class="transaction-currency">
+            {{ transaction.currency.replace("USD", "RSD") }}
+          </p>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+  <mat-paginator
+    [pageSize]="5"
+    [pageSizeOptions]="[5, 10, 25, 50]"
+    showFirstLastButtons
+  ></mat-paginator>
+</div>

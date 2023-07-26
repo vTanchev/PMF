@@ -1,0 +1,77 @@
+<div>
+  <div>Financial overview</div>
+  <div>Budgets</div>
+  <div>Saving Goals</div>
+  <div>Categorization rules</div>
+</div>
+<br />
+<br />
+<br />
+<p>PERIOD:</p>
+<form>
+  <div class="date-pickers-container">
+    <mat-form-field>
+      <mat-label>From:</mat-label>
+      <input
+        matInput
+        [matDatepicker]="fromDate"
+        (dateChange)="handleFromDateChange($event)"
+      />
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="fromDate"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #fromDate></mat-datepicker>
+    </mat-form-field>
+
+    <br />
+
+    <mat-form-field>
+      <mat-label>To:</mat-label>
+      <input
+        matInput
+        [matDatepicker]="toDate"
+        (dateChange)="handleToDateChange($event)"
+      />
+      <mat-hint>MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle
+        matIconSuffix
+        [for]="toDate"
+      ></mat-datepicker-toggle>
+      <mat-datepicker #toDate></mat-datepicker>
+    </mat-form-field>
+  </div>
+
+  <br />
+
+  <p>FILTER BY KIND:</p>
+  <mat-form-field>
+    <mat-label>All Kinds</mat-label>
+    <mat-select (selectionChange)="handleKindChange($event)">
+      <mat-option *ngFor="let kindType of kindTypes" [value]="kindType">
+        {{ kindType }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <br />
+
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="handleFilterTransactions($event)"
+  >
+    Filter Transactions
+  </button>
+
+  <br />
+
+  <button
+    mat-raised-button
+    color="accent"
+    (click)="handleClearSelections($event)"
+  >
+    Clear Selections
+  </button>
+</form>
